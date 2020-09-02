@@ -1,0 +1,45 @@
+---
+title: "Plotly Presentation"
+author: "Aman Jindal"
+date: "2 September 2020"
+output:
+    ioslides_presentation:
+        keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, comment = '', cache = TRUE)
+```
+
+
+## Code for Plotting Stock Prices 
+
+```{r, echo = TRUE, results='hide'}
+library(plotly) ; library(data.table) ;library(quantmod)
+fromDate <- '2012-01-01'; toDate <- '2019-12-31' 
+getSymbols(Symbols = c('HD', 'LOW'), src='yahoo', 
+           from = fromDate, to = toDate)
+
+df_stockPrices <- data.table(Date=index(HD), 
+                             HD = as.numeric(HD$HD.Adjusted), 
+                             LOW = as.numeric(LOW$LOW.Adjusted))
+
+dfMelted_stockPrices <- melt(data = df_stockPrices, 
+                             id.vars = c('Date'),
+                             measure.vars = c('HD', 'LOW'),
+                             variable.name = 'Stock',
+                             value.name = 'Price') 
+
+p <-  plot_ly(dfMelted_stockPrices, x = ~Date, 
+              y = ~Price, color = ~Stock,
+        type = "scatter", mode = "lines")
+```
+
+
+## HD vs LOW Stock Prices
+
+```{r, echo=FALSE}
+p
+```
+
+
