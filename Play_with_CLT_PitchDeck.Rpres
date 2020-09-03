@@ -1,0 +1,131 @@
+Pitchdeck for Play with Central Limit Theorem App
+========================================================
+author: Aman Jindal
+date: 03 September 2020
+autosize: TRUE
+
+```{r, label='setup', echo=FALSE, include=FALSE}
+knitr::opts_chunk$set(comment='', message=FALSE, warning=FALSE, cache=TRUE)
+library(data.table)
+library(ggplot2)
+```
+
+Introduction:
+========================================================
+<font size="6">
+- The goal of this presentation is to visualize the application of Central Limit Theorem. Central Limit Theorem is one of the most powerful concepts in Statistics and several statistical techniques rely on it.
+- Central Limit Theorem states that *"the sampling distribution of the mean of any independent, random variable will be normal or nearly normal, if the sample size is large enough"*
+- In the [Play_with_CLT App](https://hbk91.shinyapps.io/Play_with_CLT), we have shown the application of Central Limit Theorem for an [Exponential Distribution](https://en.wikipedia.org/wiki/Exponential_distribution). Users can play around with *'number of simulations'*, *'sample size'* and *'mean of the exponential distribution'* to see the application of central limit theorem.
+</font>
+Visualizing the CLT(1/2):
+========================================================
+<font size="5">
+Large sample size (40) and Small number of simulations (1000) result in a more normal sample means distribution. 
+</font>
+
+```{r, echo=FALSE, eval=TRUE, fig.width=16, fig.height=8}
+
+nsim <- 1000
+sample_size <- 40
+lambda <- 0.2
+set.seed(1234)
+        
+simulations <- matrix(data=rexp(n=nsim*sample_size,rate=lambda), nrow=nsim, ncol=sample_size)
+means_summary <- data.table(means=rowMeans(x=simulations))
+means_summary[, ExpRandoms := rexp(n=nsim, rate=lambda)]
+        
+simulation_mean <- mean(means_summary[,means])
+theorertical_mean <- 1/lambda
+simulation_mean_label <- paste('Simulation Mean = ',round(simulation_mean,4))
+theoretical_mean_label <- paste('Theoretical Mean = ',round(theorertical_mean,4))
+
+simulation_sd <- sd(means_summary[,means])
+theoretical_sd <- 1/lambda/sqrt(sample_size)
+        
+binwidth <- lambda
+ggplot(data=means_summary, mapping=aes(x=means)) + 
+    geom_histogram(mapping=aes(x=means, color='MeanExpRandom'), 
+                   binwidth = binwidth, fill=NA, na.rm = TRUE) +
+    geom_histogram(mapping=aes(x=ExpRandoms, color='ExpRandom'), 
+                   binwidth = binwidth, fill=NA, na.rm = TRUE) +
+    stat_function(fun = function(x, mean, sd, n) 
+        n*dnorm(x=x, mean=mean, sd=sd), 
+        args = list(mean=simulation_mean, sd=simulation_sd, 
+                    n=nsim*binwidth), na.rm = TRUE) +
+    geom_vline(mapping=aes(xintercept=simulation_mean, color='SimulationMean')) +
+    geom_vline(mapping=aes(xintercept=1/lambda, color='TheoreticalMean')) +
+    labs(title='Distribution of Sample Means and Random Exponentials') +  
+    labs(x='Mean/Value of Random Exponential', y='Count') +
+    scale_color_manual(name = "", values = c(MeanExpRandom='black', ExpRandom='green', 
+                                     SimulationMean = "blue", TheoreticalMean = "red"),
+                               labels = c(MeanExpRandom='Sampling Distribution', 
+                                        ExpRandom='Random Exponentials',
+                                        SimulationMean=simulation_mean_label, 
+                                        TheoreticalMean=theoretical_mean_label)) + 
+    xlim(0,1/lambda^2) + ylim(0, nsim*binwidth) +
+    theme(plot.title = element_text(size = 22, face = 'bold'), 
+          legend.position = 'bottom',
+                  text = element_text(size = 18), aspect.ratio = 0.5)
+```
+
+Visualizing the CLT(2/2):
+========================================================
+<font size="5">
+Small sample size (10) and Small number of simulations (100) result in a less normal sample means distribution.  
+</font>
+
+```{r, echo=FALSE, eval=TRUE, fig.width=16, fig.height=8}
+
+nsim <- 100
+sample_size <- 10
+lambda <- 0.2
+set.seed(1234)
+        
+simulations <- matrix(data=rexp(n=nsim*sample_size,rate=lambda), nrow=nsim, ncol=sample_size)
+means_summary <- data.table(means=rowMeans(x=simulations))
+means_summary[, ExpRandoms := rexp(n=nsim, rate=lambda)]
+        
+simulation_mean <- mean(means_summary[,means])
+theorertical_mean <- 1/lambda
+simulation_mean_label <- paste('Simulation Mean = ',round(simulation_mean,4))
+theoretical_mean_label <- paste('Theoretical Mean = ',round(theorertical_mean,4))
+
+simulation_sd <- sd(means_summary[,means])
+theoretical_sd <- 1/lambda/sqrt(sample_size)
+        
+binwidth <- lambda
+ggplot(data=means_summary, mapping=aes(x=means)) + 
+    geom_histogram(mapping=aes(x=means, color='MeanExpRandom'), 
+                   binwidth = binwidth, fill=NA, na.rm = TRUE) +
+    geom_histogram(mapping=aes(x=ExpRandoms, color='ExpRandom'), 
+                   binwidth = binwidth, fill=NA, na.rm = TRUE) +
+    stat_function(fun = function(x, mean, sd, n) 
+        n*dnorm(x=x, mean=mean, sd=sd), 
+        args = list(mean=simulation_mean, sd=simulation_sd, 
+                    n=nsim*binwidth), na.rm = TRUE) +
+    geom_vline(mapping=aes(xintercept=simulation_mean, color='SimulationMean')) +
+    geom_vline(mapping=aes(xintercept=1/lambda, color='TheoreticalMean')) +
+    labs(title='Distribution of Sample Means and Random Exponentials') +  
+    labs(x='Mean/Value of Random Exponential', y='Count') +
+    scale_color_manual(name = "", values = c(MeanExpRandom='black', ExpRandom='green', 
+                                     SimulationMean = "blue", TheoreticalMean = "red"),
+                               labels = c(MeanExpRandom='Sampling Distribution', 
+                                        ExpRandom='Random Exponentials',
+                                        SimulationMean=simulation_mean_label, 
+                                        TheoreticalMean=theoretical_mean_label)) + 
+    xlim(0,1/lambda^2) + ylim(0, nsim*binwidth) +
+    theme(plot.title = element_text(size = 22, face = 'bold'), 
+          legend.position = 'bottom',
+                  text = element_text(size = 18), aspect.ratio = 0.5)
+
+```
+
+Links to Source Code and App:
+========================================================
+
+##### - Check out the [Play_with_CLT App](https://hbk91.shinyapps.io/Play_with_CLT) for playing around with different parameters.
+##### - Check out the [code for the Play_with_CLT App](https://github.com/hbk91/JHU_Coursera_Course9_Project/tree/master/Play_with_CLT)
+##### - Check out the [code for this presentation](https://github.com/hbk91/JHU_Coursera_Course9_Project/Play_with_CLT_PitchDeck.Rpres)
+<br/><br/><br/>
+# <center> <b> Thanks </b></center>
+
