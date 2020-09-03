@@ -34,7 +34,7 @@ Links to Source Code and App:
 
 ##### - Check out the [Play_with_CLT App](https://hbk91.shinyapps.io/Play_with_CLT) for playing around with different parameters.
 ##### - Check out the [code for the Play_with_CLT App](https://github.com/hbk91/JHU_Coursera_Course9_Project/tree/master/Play_with_CLT)
-##### - Check out the [code for this presentation](https://github.com/hbk91/JHU_Coursera_Course9_Project/Play_with_CLT_PitchDeck.Rpres)
+##### - Check out the [code for this presentation](https://github.com/hbk91/JHU_Coursera_Course9_Project/blob/master/Play_with_CLT_PitchDeck.Rpres)
 <br/><br/><br/>
 # <center> <b> Thanks </b></center>
 
