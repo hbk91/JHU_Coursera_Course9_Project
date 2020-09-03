@@ -13,6 +13,7 @@ Introduction:
 - Central Limit Theorem states that *"the sampling distribution of the mean of any independent, random variable will be normal or nearly normal, if the sample size is large enough"*
 - In the [Play_with_CLT App](https://hbk91.shinyapps.io/Play_with_CLT), we have shown the application of Central Limit Theorem for an [Exponential Distribution](https://en.wikipedia.org/wiki/Exponential_distribution). Users can play around with *'number of simulations'*, *'sample size'* and *'mean of the exponential distribution'* to see the application of central limit theorem.
 </font>
+
 Visualizing the CLT(1/2):
 ========================================================
 <font size="5">
