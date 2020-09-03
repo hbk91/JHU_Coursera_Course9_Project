@@ -1,14 +1,15 @@
-#' @title Understanding Central Limit Theorem 
+#' @title Plaay with CLT 
 #' @docType Shiny App UI
 #' @author Aman Jindal
-#' @description This project gives example of how Central Limit Theorem works.It plots the distribution of the means of random samples 
-#' generated out of an exponential distribution. User needs to input number of simulations, sample size and mean of the exponential
+#' @description This project gives example of how Central Limit Theorem works. It plots the distribution of the means of random samples 
+#' generated out of an exponential distribution. User needs to choose from a GUI the number of simulations, the sample size and the mean of the exponential
 #' distribution to view the result  
 
 library(shiny)
 
 shinyUI(fluidPage(
-    titlePanel(h1("Play with Central Limit Theorem", align = "center")),
+    titlePanel(title = h1("Play with Central Limit Theorem", align = "center"), 
+               windowTitle = 'Play with CLT'),
     sidebarLayout(
         sidebarPanel( 
             width = 3,

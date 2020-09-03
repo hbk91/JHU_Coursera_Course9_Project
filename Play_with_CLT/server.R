@@ -1,7 +1,7 @@
 #' @author Aman Jindal
-#' @description This is the server for the 'Understanding Central Limit Theorem' Shiny Project
+#' @description This is the server for the 'Play with CLT' Shiny Project
 #' @param input$sliderNsim is the number of simulations desired by the user 
-#' @param input$sliderSampleSize is the resampling size desired by the user 
+#' @param input$sliderSampleSize is the sampling size desired by the user 
 #' @param input$selectedMean is the mean of the exponential distribution desired by the user
 #' @return output$plot1 is the plot of the distribution of the means of the samples  
 
